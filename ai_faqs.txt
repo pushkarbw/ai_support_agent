@@ -1,0 +1,230 @@
+Solution Architecture
+
+General AI Usage
+
+Q. Do you currently implement AI technologies in your services or products? Please specify.
+
+Yes. List of 3rd party tools can be found here. Outside of these, there are custom homegrown rule-based and ML-based solutions.
+
+Q. Can I share the solution architecture diagram with customers?
+  Yes, you can share this diagram externally with potential customers. It can be a valuable tool for their internal teams to evaluate BrowserStack.
+
+Q. What kind of AI is in use?
+
+ML & Generative AI.
+
+Q. Does your organization use Generative AI? If yes, how exactly are you using it and in what products?
+
+Almost all of our capabilities use generative AI: Authoring Test Cases, Automating a test case, Self Healing an automation script to name few.
+
+Q. Does your organization ingest any data into Artificial Intelligence Machine Learning Models?
+
+No, we do not currently ingest any data into AI/ML models. Our approach focuses solely on one-shot inference. None of the data from BrowserStack is used to train or refine AI/ML models.
+
+Q. Why are we not using our own LLM?
+
+Building and maintaining an in-house LLM is resource-intensive, requiring significant time, and infrastructure. By leveraging industry-leading LLMs like OpenAI and Claude, we ensure our customers benefit from the latest advancements in AI, unmatched accuracy, and scalability. This allows us to focus on integrating these tools seamlessly into our platform, delivering faster innovation, and creating tailored solutions to meet your specific testing needs.
+
+Q. Any detailed documentation on the products where AI is being used?
+
+We don’t yet have a single source customer-facing documentation, but AI is used to an extent in multiple BrowserStack products. Documentation can be found here.
+
+Q. What do you use to generate test cases, or how in Jira? What do you take as the context to give suggestions?
+
+We use existing context such as existing test cases, and their details. Additionally, users can provide context through product requirement documents (PRDs) or custom prompts to generate tailored test cases.
+
+Q. Do we have other languages being supported in AI? Like Spanish?
+
+Not currently.
+
+Q. Does AI effectiveness vary depending on the size of client, for eg, commercial accounts will not have as much data as enterprise; does that mean AI will be less effective?
+
+AI effectiveness is influenced by the richness of the context provided. Larger datasets naturally provide better context and fewer gaps. However, by allowing users to provide additional context through PRDs or detailed prompts, we address this challenge effectively.
+
+Q. If the client does not provide any data or grants only limited access (e.g., to specific folders), will the AI still be able to generate responses? In other words, is the AI model pre-trained and capable of functioning without relying on the client’s data?
+
+Yes, the effectiveness will depend on the context the AI has access to. The users can provide context through PRDs or detailed prompts, if not any other data like existing test cases, and the AI can generate responses even for empty projects.
+
+Q. I could find Selenium self healing and automatic test generation features using AI in the documentation. Do these require sending the user code (including HTML/DOM) to Gen AI engines?
+
+We don't directly send the user HTML/DOM to LLM. 
+
+Q. The service collects and logs " web page visited before using the service," What is the purpose of collecting this information?
+
+We collect this information so that when next time same element fails we could suggest the healed element from the updated HTML/DOM by utilising this collected information.
+
+Q. How is the data sent to AI models separated between clients?
+
+a. All data across customers are isolated, and none of the data from one tenant can cross over to another tenant. Our implementation relies on online prediction, or one-shot inference, where the data sent for prediction is processed in real-time and is not stored. This ensures that client data remains isolated and secure throughout the inference process. Additionally, we follow strict data protection policies aligned with industry standards to maintain client confidentiality.
+
+Q. Do you use metadata sent to AI for training?
+
+a. We do not use customer data, including metadata, for training our AI models. Our approach leverages foundation models, which are pre-trained and not fine-tuned with any customer data.
+
+Q. How long is the metadata retained when sent to the AI model?
+
+a. The metadata sent to AI models is processed using online prediction, or one-shot inference. This ensures that data is only used in real-time to generate predictions and is not stored or retained. Additionally, we use foundation models that are pre-trained and not fine-tuned with customer data, ensuring no customer data is used for training or long-term storage.
+
+AI Security & Privacy
+
+Q. How is customer-specific content protected within BrowserStack AI/ML systems?
+
+All data across customers are isolated, and none of the data from one tenant can cross over to another tenant.
+
+Q. Does your organization log, monitor, and review the use of AI/ML technologies (inputs, outputs, chat histories, and other content uploads such as User-Uploaded Files)?
+
+We log and capture only the information necessary to achieve the intended functionality of the features in use. This ensures minimal data is retained, while still delivering the desired outcomes effectively.
+
+Q. Does your organization enforce access controls to ensure that only relevant Generative AI application processes (like retrieval processes and not operational stuff) are granted read access to customer content (e.g., chat histories, User-Uploaded Files)?
+
+Yes, we have a clearly defined access control matrix to regulate access. Strict checks are in place to ensure that only the relevant AI processes can access customer content, maintaining security and confidentiality.
+
+Q. Does your organization encrypt customer-specific content within your AI/ML ecosystem?
+
+No PII is used for any of our generative AI solutions.
+
+Q. Does your organization use Generative AI Trust, Risk, Security Management (TRiSM) products to filter inputs and block malicious prompts?
+
+Not currently. However, we continually assess the best tools and practices for ensuring security and quality.
+
+Q. What security controls does your organization use to prevent "cross-contamination" of content between users during external content retrieval?
+
+All data across customers are isolated, and none of the data from one tenant can cross over to another tenant.
+
+Q. Describe the incident response strategies for potential AI-related security breaches.
+
+BrowserStack follows established incident and risk management protocols to ensure a swift response. When a security breach is detected or reported, authorized personnel immediately initiate the incident response process. Our production systems are continuously monitored, and any issues (outages, bugs, security vulnerabilities, etc.) trigger this process. Corrective actions are taken in line with our defined policies. Additionally, within 48 hours of the incident, we will notify the affected users.
+
+ Q. When we generate the test cases based on what the test cases are there in the folder, does it also take into consideration a username passwords that are private information?
+
+The AI uses everything provided in existing test cases as context to ensure the generated test cases are highly relevant and tailored to user needs. However, none of this data is used to train any third-party AI tools, or stored anywhere outside of BrowserStack.
+
+AI Data Handling & Compliance
+
+Q. What models will you use (e.g., WatsonX, Mistral, Llama)?
+
+We use different models based on different use cases. 3rd party vendors we use can be found here.
+
+Q. Please describe what type of data will be used to initially train the AI model.
+
+We are currently not fine-tuning/training on customer data and are using different retrieval techniques instead. Training, if and when needed, will be on customer content (not PII) and limited to the scope of the tenant, with no data cross-pollinating across tenants.
+
+Q. Will the inputs entered by users and the associated outputs be used to train and improve the AI model for our use?
+
+Customer Content (fed into BrowserStack products while using any of our products. This includes any data that the customer inputs into BrowserStack but not including Account Related Information) may be shared with Third Party AI tools to enable use cases for Testing. However, none of the data (input or associated output) is used to train any third party AI tools, and no PII data is being shared
+
+No data from one user will make it to another user on our platform (be it for training or otherwise).
+
+Q. Will any inputs, outputs, or datasets used by the AI tool contain third-party intellectual property (IP)?
+
+No.
+
+Q. Do we have the ability to delete data from the AI tool/model?
+
+You could opt out of GenerativeAI-based solutions. Already generated data would remain untouched, and any new data would not be used. User specific models (if any) will be destroyed upon opt-out.
+
+Q. What data is collected to support AI services?
+
+The data is same as any other Customer Content used or submitted by you on our Platform. No Account Related Information will be shared with any third party AI tools. 
+
+Q. How is the data being used?
+
+By enabling AI Features, certain functionalities may be included enabled for ai to generate responses, for instance - suggesting new test cases etc., However, its clarified that you are required to assess and evaluate the accuracy of the output generated. Also, all output will be considered as Customer Content (i.e will be fully owned by you).
+
+We wish to further clarify that the Customer Content provided/uploaded by you is formatted and cleaned by the platform and sent to 3rd party AI tools to generate responses.
+
+Q. Where is the data being stored?
+
+All customer content and inferences / responses are stored within our cloud tenants on AWS and/or GCP, and is stored in a manner similar to how all other Customer Content on our platform is stored.
+
+Q. Are we GRR compliant?
+Ideally, we mention to customers whether the feature is GRR-compliant in a specific region. GRR (Geo Region Restriction) ensures that data is stored and processed within a designated geographical area, adhering to local data residency regulations. Currently, we are GRR-compliant  for the TM-AI Features only in the US. 
+
+AI Governance & Ethics
+
+Q. Does your organization actively seek AI/ML security guidance from authoritative sources such as OWASP Top 10 for LLMs, ML, AI Exchange, etc.?
+
+Not at this time, but we are exploring these authoritative sources to enhance our security practices and ensure adherence to industry best standards in the future.
+
+Q. How does your organization address AI "hallucinations" (when AI generates incorrect or misleading information)?
+
+We take continuous feedback from our users and monitor usage metrics to determine the usefulness of generated results. We actively work on improving the suggestions of generated results.
+
+Q. What measures does your organization take to address biased, harmful, or inappropriate outputs from AI/ML systems?
+
+We have a set of prompt engineering and meta prompting techniques to remove all kinds of biases and harmful content.
+
+Q. How do you address ethical considerations and potential biases in your AI systems?
+
+Comprehensive and diverse testbeds ensure this.
+
+Q. What mechanisms are in place to review and audit AI decisions?
+
+We monitor usage metrics to track the acceptance of AI decisions. Additionally, we have comprehensive testbeds that ensure AI decision-making sanity.
+
+Q. How do you ensure transparency in the decision-making processes of your AI systems?
+
+We provide documentation on solutions we offer. We also regularly collect user feedback on AI decisions based on pre-configured triggers to improve our understanding and the underlying solution.
+
+Q. How does the supplier filter inputs and block malicious prompts within the AI?
+
+This is evolving on our end. Currently, we have some AI + algorithm-based checks to handle these. We have a set of meta prompting that ensures the output is in a specific format. If those are not adhered to, the algorithm/programmatic checks will fail.
+
+Opting in for Browserstack AI
+
+Standard Contracts
+
+If the group ID is covered by a standard contract with BrowserStack, follow the instructions on the Activate Browserstack AI page.
+
+Important: You need to be the Owner of your Account to manage BrowserStack AI preferences.
+
+Custom MSAs
+
+Check on Salesforce that the given group ID is under custom MSA.
+
+Group ID with custom MSA sign an agreement which does not include terms to protect Browserstack against data privacy and other AI technology related concerns customer might have.
+
+CE/AE should share the amendment document which covers AI clauses, with the customer and should get it signed by an authorised signatory from the customers' side. Here is the doc link.  
+
+Once signed, respective CE/AE should raise a request on SFDC under 'Others'.
+
+In case of a pushback from the customer, raise an SFDC request and the legal team would take it up.
+
+CE/AE should take legal team’s confirmation on if the document is signed 
+
+ CE/AE should notify @ai-ops on #help-ai-squad to enable AI from the backend for the group ID.
+
+Approach compliance team on #help-compliance on Slack for any help regarding step #2
+
+
+
+Q. What if my question is not covered in AI FAQs Page?
+
+If your queries are not covered above, please refer to this sheet which covers customer queries related to AI compliance & legal.
+
+If the query is still not answered - please reach out to #help-compliance on slack.
+
+If the query is not answered on #help-compliance as well, please reach out to #help-ai-squad.
+
+
+Q. Troubleshooting AI Opt-In Issues
+Automatic Opt-In: Any new accounts created after January 2024 are automatically opted into AI features by default.
+
+Custom MSA Groups: For custom Master Service Agreement (MSA) groups, the account administrator or owner only have the rights to enable AI for their group.  AI features can be enabled from https://www.browserstack.com/accounts/settings/ai-preferences.
+Use the below query to check if customer has custom MSA in place.
+
+
+
+SELECT
+    group_id,
+    MAX(CASE WHEN key = 'ai-opt-in' THEN value END) AS ai_opt_in_value,
+    MAX(CASE WHEN key = 'Is_MSA_Account' THEN value END) AS is_msa_account_value
+FROM
+    `browserstack-production.common.group_properties`
+WHERE
+    group_id IN (<group_id>) -- Querying for multiple group IDs
+GROUP BY
+    group_id;
+Persistent Issues: If the customer still unable to opt in to AI, please reach out to our AI Operations team (ai-ops). They can enable the feature for your account from the backend.
+
+ 

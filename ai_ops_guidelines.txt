@@ -1,0 +1,210 @@
+Responsibilities
+
+Create (But not send) Newsletter on 10th of every month or the next working day, if 10th is a holiday. 
+
+Be on top of all the threads in #help-ai-squad on Slack
+
+Be part of daily ops standup as a product owner
+
+Help prioritise tickets on ops board
+
+When you are acting as a ops but are on leave, make sure to add next in-line ops to the ops standup and give him or her a TL;DR (if needed) of what needs to be done on that day. For eg.
+
+Respond to a customer query
+
+Respond to support ticket
+
+Drive forward an internal discussion, etc.
+
+All the product backlog items needs to be moved in the right EPIC on Jira.
+
+Update AI FAQ page with newer queries from #help-ai-squad channel
+
+Own the product catch up call for the month
+
+Ops is not supposed to be responsible for solving everything that comes to product on that day. Ops is just a smart router where he or she needs to resolve things themselves as much as possible but be completely okay to route things to the right product owner in the squad, if needed.
+
+Ops Rotation
+
+Ops will be rotated every month on 1st working day of the month in this order
+
+Add the next person on the daily ops standup call on the last day of the month. If anyone fails to do so, he or she will continue being ops unless updated.
+
+Last Updated on  
+
+
+
+
+
+Escalate to the following folks if answer can't be found or unsatisified response given by the questioner. Check existing month, year and then tag those folks based on correct month and yeaar
+
+Nov 2024
+
+@Shashank Jain
+
+
+
+Dec 2024
+
+@Swetha A
+
+
+
+Jan 2025
+
+ @Arjun K
+
+
+
+Feb 2025
+
+@Sharique Ahmad 
+
+
+
+March 2025
+
+@Deepshikha Pokale 
+
+
+
+April 2025
+
+@Nupur Sanjiv Agrawal
+
+
+
+May 2025
+
+@Swetha A
+
+
+
+Jun 2025
+
+@Tushar Sanap 
+
+
+
+Jul 2025
+
+@Amit Bathija 
+
+
+
+August 2025
+
+ @Madhura Potnis
+
+
+
+Sept 2025
+
+ @Mitali Mehta
+
+
+
+Oct 2025
+
+@Bharti Sharma 
+
+
+
+Nov 2025
+
+@Aditya Biswas 
+
+
+
+Dec 2025
+
+@Arjun Narayanan 
+
+
+
+Jan 2026
+
+@Pushkar Kumar 
+
+
+
+Feb 2026
+
+@Mayank Gaur 
+
+
+
+Mar 2026
+
+ @Arjun K
+
+
+
+Apr 2026
+
+@Sharique Ahmad 
+
+
+
+Ideally, on an average day, ops activities should not take more than 20 minutes.
+
+Adding a new joinee in the list
+
+If someone joins the team in month M, then he or she will be acting as ops in M+2 & rest of the list will shift accordingly. This will give that person enough opportunities to learn about the different initiatives in the org and also cross collaborate.
+
+Important Links
+
+Epic Categorisation
+
+Ops Board
+
+Health Report Emails
+
+Doing Greater Good
+
+As we push towards becoming the best Product team in BrowserStack - Ops is supposed to solve atleast one end-to-end “real“ problem during his/her time as Ops. 
+
+These problems could range from solving for something that eats up lots of our time on regular basis to something that will help us become more productive or knowledgable as a team.
+
+Onwards & Upwards  
+
+Month
+
+Ops
+
+What problem did you solve for once & all?
+
+
+
+
+
+
+
+
+
+
+
+
+
+List of “Real“ problems to be solved
+
+This list serves as a repository of problems that, if solved, will help us become a better team—one step each month.
+
+Problem Statement
+
+Added By
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
