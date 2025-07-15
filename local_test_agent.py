@@ -113,12 +113,12 @@ while True:
     relevant_chunks = retrieve_top_chunks(query, chunks, embeddings)
 
     if not relevant_chunks:
-        print("\n❌ Sorry, I couldn’t find a clear answer. ccDo  @ai-ops.")
+        print("\n❌ Sorry, I couldn’t find a clear answer. cc @ai-ops.")
         continue
 
     context = "\n\n".join(relevant_chunks)
     answer = generate_answer(query, context, chat_history=chat_history)
-    tagged_answer = answer + "\n\ncc @ai-ops"
+    tagged_answer = answer + "\n cc @ai-ops"
 
     print("\n💬 Answer:\n", tagged_answer)
     chat_history.append((query, tagged_answer))
