@@ -1,14 +1,19 @@
 # local_test_agent.py
 
 import os
-from bs4 import BeautifulSoup
-import requests
+from PIL import Image
+from dotenv import load_dotenv
 import pytesseract
 from PIL import Image
-from rag_utils import split_text, embed_chunks, retrieve_top_chunks, generate_answer
 
+import pytesseract
+from rag_utils import (
+    split_text, embed_chunks, retrieve_top_chunks, generate_answer,
+    crawl_browserstack_faq, crawl_browserstack_ai_terms
+)
 
-# Load local KB files
+load_dotenv()
+# Load static KB
 def load_file(path):
     with open(path, 'r', encoding='utf-8') as f:
         return f.read()
@@ -16,57 +21,6 @@ def load_file(path):
 AI_FAQ = load_file("ai_faqs.txt")
 OPS_GUIDE = load_file("ai_ops_guidelines.txt")
 
-# Scrape all internal/external articles from AI FAQ page
-def crawl_browserstack_articles(start_url, path_starts_with):
-    base_url = "https://www.browserstack.com"
-    visited_links = set()
-    full_text = ""
-
-    try:
-        res = requests.get(start_url)
-        soup = BeautifulSoup(res.text, "html.parser")
-        for a_tag in soup.find_all("a", href=True):
-            href = a_tag["href"]
-
-            # Skip irrelevant external links (for AI FAQ only)
-            if not href.startswith("/") and not href.startswith(base_url):
-                continue
-
-            # Normalize
-            if href.startswith(base_url):
-                rel_path = href[len(base_url):]
-            else:
-                rel_path = href
-
-            if rel_path.startswith(path_starts_with) and rel_path not in visited_links:
-                visited_links.add(rel_path)
-                full_url = base_url + rel_path
-                try:
-                    article_res = requests.get(full_url)
-                    soup2 = BeautifulSoup(article_res.text, "html.parser")
-                    full_text += "\n\n--- " + full_url + " ---\n" + soup2.get_text()
-                except Exception as e:
-                    print(f"❌ Failed to fetch {full_url}: {e}")
-    except Exception as e:
-        print(f"❌ Error loading base page {start_url}: {e}")
-    return full_text
-
-# Crawl external links from AI Terms page too
-def fetch_ai_terms_main_page_only():
-    url = "https://www.browserstack.com/terms/ai-terms"
-    try:
-        print(f"Fetching AI Terms page: {url}")
-        res = requests.get(url, timeout=10)
-        soup = BeautifulSoup(res.text, "html.parser")
-        text = soup.get_text(separator="\n", strip=True)
-        return f"\n\n--- {url} ---\n{text}"
-    except Exception as e:
-        print(f"❌ Failed to fetch AI Terms page: {e}")
-        return ""
-
-
-
-# OCR any image KBs if needed
 def load_images_kb(folder_path):
     combined_text = ""
     for filename in os.listdir(folder_path):
@@ -80,29 +34,19 @@ def load_images_kb(folder_path):
                 print(f"Failed to process {filename}: {e}")
     return combined_text
 
-# Load all KBs
-print("Loading knowledge base...")
-FAQ_WEB = crawl_browserstack_articles("https://www.browserstack.com/support/faq/browserstack-ai", "/support/faq/browserstack-ai/")
-AI_TERMS_SITE_TEXT = fetch_ai_terms_main_page_only()
+# Final KB
+print("Loading local knowledge base...")
 IMAGE_KB = load_images_kb("knowledge_images") if os.path.exists("knowledge_images") else ""
+FULL_KB = AI_FAQ + "\n" + OPS_GUIDE + "\n" + IMAGE_KB
 
-FULL_KB = AI_FAQ + "\n" + OPS_GUIDE + "\n" + FAQ_WEB + "\n" + AI_TERMS_SITE_TEXT + "\n" + IMAGE_KB
-
-print("Knowledge Base ready. Ask your question!")
-
-
-# Step 1: Split and embed KB
-print("📖 Splitting KB into chunks...")
+# Precompute embeddings
+print("Splitting and embedding KB...")
 chunks = split_text(FULL_KB)
 print(f"✅ {len(chunks)} chunks created.")
-
-
-
-print("🔁 Creating embeddings...")
 embeddings = embed_chunks(chunks)
-print("✅ Embeddings created")
+print("Embeddings created")
 
-# Step 2: User query loop with history
+# Loop
 chat_history = []
 
 while True:
@@ -111,24 +55,43 @@ while True:
         break
 
     relevant_chunks = retrieve_top_chunks(query, chunks, embeddings)
+    print("\n📄 Relevant Local Chunks:")
+    if relevant_chunks:
+        for i, (score, chunk) in enumerate(relevant_chunks, 1):
+            print(f"\n--- Chunk {i} (Score: {score:.4f}) ---\n{chunk}")
 
-    if not relevant_chunks:
-        print("\n❌ Sorry, I couldn’t find a clear answer. cc @ai-ops.")
+    # Fallback sources
+    faq_text = crawl_browserstack_faq()
+    faq_chunks = split_text(faq_text)
+    faq_embeddings = embed_chunks(faq_chunks)
+    relevant_chunks1 = retrieve_top_chunks(query, faq_chunks, faq_embeddings)
+    if relevant_chunks1:
+        for i, (score, chunk) in enumerate(relevant_chunks1, 1):
+            print(f"\n--- FAQ Chunk {i} (Score: {score:.4f}) ---\n{chunk}")
+
+    ai_terms_text = crawl_browserstack_ai_terms()
+    ai_terms_chunks = split_text(ai_terms_text)
+    ai_terms_embeddings = embed_chunks(ai_terms_chunks)
+    relevant_chunks2 = retrieve_top_chunks(query, ai_terms_chunks, ai_terms_embeddings)
+    if relevant_chunks2:
+        for i, (score, chunk) in enumerate(relevant_chunks2, 1):
+            print(f"\n--- AI Terms Chunk {i} (Score: {score:.4f}) ---\n{chunk}")
+
+    # Ensure all are lists, even if empty
+    relevant_chunks = relevant_chunks or []
+    relevant_chunks1 = relevant_chunks1 or []
+    relevant_chunks2 = relevant_chunks2 or []
+
+    final_relevant_chunks = relevant_chunks + relevant_chunks1 + relevant_chunks2
+
+    if final_relevant_chunks:
+        final_context = "\n\n".join([chunk for score, chunk in final_relevant_chunks])
+        final_answer = generate_answer(query, final_context, chat_history)
+        tagged_answer = final_answer + "\n cc @ai-ops"
+        print("\n🔍 Answer:\n", tagged_answer.strip(), "\n\n")
+    else:
+        print("\n❌ Sorry, I couldn’t find a clear answer even from the FAQ & AI Terms. cc @ai-ops.\n")
         continue
 
-    context = "\n\n".join(relevant_chunks)
-    answer = generate_answer(query, context, chat_history=chat_history)
-    tagged_answer = answer + "\n cc @ai-ops"
-
-    print("\n💬 Answer:\n", tagged_answer)
-    chat_history.append((query, tagged_answer))
-    # 🧹 Clean history if too long
     if len(chat_history) > 20:
         chat_history = chat_history[-20:]
-
-
-
-
-
-
-
