@@ -1,0 +1,57 @@
+
+Ask your question (or type 'exit'): Do we support Spanish?
+
+
+🔍 Answer:
+ No, currently, we do not support Spanish in AI. 
+
+
+
+Ask your question (or type 'exit'): Do we use Anthropic for AI?
+
+
+🔍 Answer:
+ Yes, BrowserStack uses Anthropic for AI. You can find more information about the terms and conditions related to Anthropic AI technology on their website: https://www.anthropic.com/legal/commercial-terms and https://www.anthropic.com/legal/aup. 
+
+
+
+Ask your question (or type 'exit'): Is user data used to train BrowserStack’s AI models?
+
+
+🔍 Answer:
+ No, user data is not used to train BrowserStack's AI models. BrowserStack follows a one-shot inference approach, where data is processed in real-time and not stored for training purposes. 
+
+
+
+Ask your question (or type 'exit'): What kind of data is used to fine-tune the AI?
+
+
+🔍 Answer:
+ The AI model used by BrowserStack is not fine-tuned with any customer data. It leverages foundation models that are pre-trained and not customized with customer-specific information. Therefore, no customer data is used for training or long-term storage. 
+
+
+
+Ask your question (or type 'exit'): How does BrowserStack handle potential AI-related security breaches?
+
+🔍 Answer:
+ BrowserStack follows established incident and risk management protocols to ensure a swift response to potential AI-related security breaches. All data across customers are isolated, and none of the data from one tenant can cross over to another tenant, ensuring customer-specific content protection within BrowserStack AI/ML systems. Additionally, BrowserStack does not ingest any data into AI/ML models and focuses solely on one-shot inference, with none of the data from BrowserStack used to train or refine AI/ML models. 
+
+
+
+Ask your question (or type 'exit'): How does BrowserStack prevent “cross-contamination” of content between users?
+
+
+🔍 Answer:
+ BrowserStack ensures the protection of customer-specific content by isolating all data across customers. None of the data from one tenant can cross over to another tenant, thus preventing any "cross-contamination" of content between users. This isolation of data helps maintain the security and privacy of each customer's information within BrowserStack AI/ML systems. 
+
+
+
+Ask your question (or type 'exit'): Does BrowserStack log and monitor the use of AI features?
+
+
+🔍 Answer:
+ Yes, BrowserStack logs and monitors the use of AI features. The information captured is only what is necessary to achieve the intended functionality of the features in use. 
+
+
+
+Ask your question (or type 'exit'): 
