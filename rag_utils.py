@@ -60,7 +60,7 @@ def crawl_browserstack_faq():
 
     def scrape_text_from_page(url):
         try:
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, timeout=20)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, "html.parser")
 
@@ -122,7 +122,7 @@ def crawl_browserstack_ai_terms():
         return "\n".join(content)
 
     except Exception as e:
-        print(f"❌ Failed to fetch {url}: {e}")
+        #print(f"❌ Failed to fetch {url}: {e}")
         return ""
 
 
@@ -142,13 +142,13 @@ def retrieve_top_chunks(query, chunks, embeddings, top_n=5, similarity_threshold
             
 
     if not scored_chunks:
-        print("⚠️ No chunks found above the threshold.")
+        #print("⚠️ No chunks found above the threshold.")
         return None
 
     scored_chunks.sort(reverse=True)
-    print("\n📊 Top relevant chunks with similarity scores:")
-    for score, chunk in scored_chunks[:top_n]:
-        print(f"\nScore: {score:.4f}")
+    #print("\n📊 Top relevant chunks with similarity scores:")
+    #for score, chunk in scored_chunks[:top_n]:
+        #print(f"\nScore: {score:.4f}")
 
     return scored_chunks[:top_n]
 
